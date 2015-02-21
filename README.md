@@ -2,8 +2,8 @@ The Beer Cellar is an application built using the MEAN stack (MongoDB, Express.j
 <ul><li>View all craft beers in your cellar (ordered by release date)</li>
 <li>Add new craft beers to your cellar</li>
 <li>Modify craft beers in your cellar</li>
-<li>Remove craft beers from your cellar<li>
-<li>View comments for a craft beer
+<li>Remove craft beers from your cellar</li>
+<li>View comments for a craft beer</li>
 <li>Add comments about a craft beer in your cellar</li></ul>
 
 
