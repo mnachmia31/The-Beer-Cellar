@@ -41,7 +41,34 @@ router.param('craftbeer', function(req, res, next, id) {
 });
 
 router.get('/craftbeers/:craftbeer', function(req, res, next) {
-  req.craftbeer.populate('comments', function(err, craftbeer) {
+    res.json(req.craftbeer);
+});
+
+router.put('/craftbeers/:craftbeer', function(req, res, next) {
+	var craftBeer = new CraftBeer(req.body);
+	
+	req.craftbeer.name = craftBeer.name;
+	req.craftbeer.brewery = craftBeer.brewery;
+	req.craftbeer.year = craftBeer.year;
+	req.craftbeer.type = craftBeer.type;
+	req.craftbeer.notes = craftBeer.notes;
+	req.craftbeer.abv = craftBeer.abv;
+	req.craftbeer.inventory = craftBeer.inventory;
+	req.craftbeer.beeradvocate = craftBeer.beeradvocate;
+	
+	req.craftbeer.save(function(err, craftbeer) {
+      if(err){ return next(err); }
+	  
+      res.json(craftbeer);
+    });
+})
+
+router.delete('/craftbeers/:craftbeer', function(req, res, next) {
+    req.craftbeer.remove();
+});
+
+router.get('/craftbeers/:craftbeer/comments', function(req, res, next) {
+	req.craftbeer.populate('comments', function(err, craftbeer) {
     if (err) { return next(err); }
 
     res.json(craftbeer);
@@ -53,7 +80,7 @@ router.post('/craftbeers/:craftbeer/comments', function(req, res, next) {
   comment.craftbeer = req.craftbeer;
 
   comment.save(function(err, comment){
-    if(err){ return next(err); }
+	if(err){ return next(err); }
 
     req.craftbeer.comments.push(comment);
     req.craftbeer.save(function(err, craftbeer) {
